@@ -2,45 +2,45 @@ package com.littlefoxstudios.identityreconciliation.persistence;
 
 import com.littlefoxstudios.identityreconciliation.Constants;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import jakarta.validation.constraints.Pattern;
-import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 
-@Entity
 @Data
-@Table(name = "fluxkart_contact") //HARDCODED
+@Entity
+@Table(name = "contact")
 public class FluxKartContact {
+
+    public static final String PRIMARY = "primary";
+    public static final String SECONDARY = "secondary";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Pattern(regexp = "^[+]?[a-zA-Z0-9()\\-\\s]{7,32}$", message = Constants.INVALID_PHONE_NUMBER_WARN) //HARDCODED
     private String phoneNumber;
 
-    @Email(message = Constants.INVALID_EMAIL_WARN)
-    @Size(max = 320, message = Constants.EMAIL_LENGTH_REACHED) //HARDCODED
     private String email;
 
-    private int linkedId;
+    @Column(unique = true)
+    private Integer linkedId;
 
-    @Enumerated(EnumType.STRING)
-    private LinkPrecedence linkPrecedence;
+    private String linkPrecedence;
 
-    private LocalDateTime createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS'Z'")
+    private Date createdAt;
 
-    private LocalDateTime updatedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS'Z'")
+    private Date updatedAt;
 
-    private LocalDateTime deletedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS'Z'")
+    private Date deletedAt;
 
-    public enum LinkPrecedence {
-        PRIMARY,
-        SECONDARY
-    }
-
-    public FluxKartContact(){
-
-    }
 }
+

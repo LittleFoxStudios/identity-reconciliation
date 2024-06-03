@@ -3,6 +3,7 @@ package com.littlefoxstudios.identityreconciliation.controller;
 import com.littlefoxstudios.identityreconciliation.Constants;
 import com.littlefoxstudios.identityreconciliation.persistence.FluxKartContact;
 import com.littlefoxstudios.identityreconciliation.persistence.FluxKartContactRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +12,15 @@ import java.util.Optional;
 @Service
 public class FluxKartContactController {
 
+    @Autowired
     FluxKartContactRepo repo;
+    @Autowired
+    ControllerHelper helper;
 
     public FluxKartContactController(FluxKartContactRepo repo) {
         this.repo = repo;
     }
+
 
     public List<FluxKartContact> getAllContacts() {
         return repo.findAll();
@@ -29,20 +34,20 @@ public class FluxKartContactController {
         return contactData.get();
     }
 
-    public FluxKartContact addContact(FluxKartContact fluxKartContact) {
-        return repo.save(fluxKartContact);
+    public FluxKartContact addNewContact(FluxKartContact fluxKartContact){
+        return helper.addNewContact(fluxKartContact);
     }
 
-    public FluxKartContact updateContactByID(long id, FluxKartContact fluxKartContact) throws Exception {
-        FluxKartContact oldData = getContactByID(id);
 
-        Optional.ofNullable(fluxKartContact.getEmail()).ifPresent(oldData::setEmail);
-        Optional.ofNullable(fluxKartContact.getPhoneNumber()).ifPresent(oldData::setPhoneNumber);
-        Optional.ofNullable(fluxKartContact.getLinkedId()).ifPresent(oldData::setLinkedId);
-        Optional.ofNullable(fluxKartContact.getLinkPrecedence()).ifPresent(oldData::setLinkPrecedence);
-        Optional.ofNullable(fluxKartContact.getUpdatedAt()).ifPresent(oldData::setUpdatedAt);
-        Optional.ofNullable(fluxKartContact.getDeletedAt()).ifPresent(oldData::setDeletedAt);
 
-       return repo.save(oldData);
+    public List<Identity> addOrUpdateContact(FluxKartContact fluxkartcontact) {
+        if(!(fluxkartcontact.getEmail() != null && fluxkartcontact.getPhoneNumber() != null)){
+            //only email or phone number is present
+            if(fluxkartcontact.getEmail() != null){
+                return helper.handleEmailOnly(fluxkartcontact);
+            }
+            return helper.handlePhoneNumberOnly(fluxkartcontact);
+        }
+        return helper.handleEmailAndPhoneNumber(fluxkartcontact);
     }
 }

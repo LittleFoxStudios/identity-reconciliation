@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FluxKartContactRepo extends JpaRepository<FluxKartContact, Long> {
-
+    FluxKartContact findByPhoneNumber(String phoneNumber);
+    FluxKartContact findByEmail(String email);
 }
