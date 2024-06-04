@@ -1,6 +1,7 @@
 package com.littlefoxstudios.identityreconciliation.controller;
 
 import com.littlefoxstudios.identityreconciliation.Constants;
+import com.littlefoxstudios.identityreconciliation.exceptionhandler.BadRequestException;
 import com.littlefoxstudios.identityreconciliation.persistence.FluxKartContact;
 import com.littlefoxstudios.identityreconciliation.persistence.FluxKartContactRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +27,21 @@ public class FluxKartContactController {
         return repo.findAll();
     }
 
-    public FluxKartContact getContactByID(long id) throws Exception {
-        Optional<FluxKartContact> contactData = repo.findById(id);
-        if(contactData.isEmpty()) {
-            throw new Exception(Constants.NO_DATA_FOUND_FOR_THE_PROVIDED_ID);
+    public Identity addOrUpdateContact(ContactInput contactInput) {
+        if(contactInput.getPhoneNumber() != null && contactInput.getEmail() != null){
+            //both email and phone number provided
+            return helper.handleEmailAndPhoneNumberCase(contactInput);
+        }else if(contactInput.getEmail() != null){
+            //only email provided
+            return helper.handleEmailAloneCase(contactInput);
+        }else if(contactInput.getPhoneNumber() != null){
+            return helper.handlePhoneNumberAloneCase(contactInput);
         }
-        return contactData.get();
+        throw new BadRequestException(Constants.INVALID_INPUT);
     }
 
-    public FluxKartContact addNewContact(FluxKartContact fluxKartContact){
-        return helper.addNewContact(fluxKartContact);
-    }
-
-
-
-    public List<Identity> addOrUpdateContact(FluxKartContact fluxkartcontact) {
+    /*
+    public Identity addOrUpdateContact(FluxKartContact fluxkartcontact) {
         if(!(fluxkartcontact.getEmail() != null && fluxkartcontact.getPhoneNumber() != null)){
             //only email or phone number is present
             if(fluxkartcontact.getEmail() != null){
@@ -50,4 +51,7 @@ public class FluxKartContactController {
         }
         return helper.handleEmailAndPhoneNumber(fluxkartcontact);
     }
+
+     */
+
 }
