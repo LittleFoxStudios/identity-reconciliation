@@ -45,20 +45,5 @@ public class FluxKartContact {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS'Z'")
     private Date deletedAt;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FluxKartContact that = (FluxKartContact) o;
-        return id.equals(that.id) &&
-                Objects.equals(phoneNumber, that.phoneNumber) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(linkedId, that.linkedId) &&
-                Objects.equals(linkPrecedence, that.linkPrecedence) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt) &&
-                Objects.equals(deletedAt, that.deletedAt);
-    }
-
 }
 

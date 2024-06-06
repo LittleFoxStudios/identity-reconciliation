@@ -5,6 +5,7 @@ import com.littlefoxstudios.identityreconciliation.exceptionhandler.ResourceNotF
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -95,4 +96,9 @@ public class FluxKartContactDataFetcher {
     }
 
 
+    public List<FluxKartContact> flushDB() {
+        List<FluxKartContact> data = repo.findAll();
+        repo.deleteAll();
+        return data;
+    }
 }

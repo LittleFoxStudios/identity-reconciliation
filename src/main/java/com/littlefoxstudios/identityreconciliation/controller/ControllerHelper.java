@@ -274,4 +274,8 @@ public class ControllerHelper {
         FluxKartContact contact = dataHandler.getContactByID(id);
         return getIdentity(false, contact);
     }
+
+    public List<FluxKartContact> flushDB() {
+        return dataHandler.flushDB();
+    }
 }

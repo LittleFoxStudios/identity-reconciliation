@@ -48,4 +48,8 @@ public class FluxKartContactController {
     public Identity getIdentity(Long id) {
         return helper.getIdentityForContactID(id);
     }
+
+    public List<FluxKartContact> flushDB() {
+        return helper.flushDB();
+    }
 }

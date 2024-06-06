@@ -22,13 +22,6 @@ public class FluxKartContactResource {
 
     FluxKartContactController controller;
 
-    /*
-
-            @RequestParam(value = Constants.INCLUDE_DELETED_PARAM,
-                    required = false,
-                    defaultValue = "false") boolean includeDeleted
-     */
-
     public FluxKartContactResource(FluxKartContactController controller){
         this.controller = controller;
     }
@@ -60,5 +53,11 @@ public class FluxKartContactResource {
         return ResponseEntity.ok(map);
     }
 
+    @DeleteMapping(value = Constants.IDENTITY)
+    public ResponseEntity<HashMap<String,List<FluxKartContact>>> flushDB(){
+        HashMap<String, List<FluxKartContact>> map = new HashMap<>();
+        map.put("deletedDB", controller.flushDB());
+        return ResponseEntity.ok(map);
+    }
 
 }
