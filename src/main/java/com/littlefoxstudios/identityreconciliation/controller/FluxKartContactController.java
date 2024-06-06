@@ -28,30 +28,24 @@ public class FluxKartContactController {
     }
 
     public Identity addOrUpdateContact(ContactInput contactInput) {
-        if(contactInput.getPhoneNumber() != null && contactInput.getEmail() != null){
+        helper.validateInput(contactInput);
+        if (contactInput.getPhoneNumber() != null && contactInput.getEmail() != null) {
             //both email and phone number provided
             return helper.handleEmailAndPhoneNumberCase(contactInput);
-        }else if(contactInput.getEmail() != null){
+        } else if (contactInput.getEmail() != null) {
             //only email provided
             return helper.handleEmailAloneCase(contactInput);
-        }else if(contactInput.getPhoneNumber() != null){
+        } else if (contactInput.getPhoneNumber() != null) {
             return helper.handlePhoneNumberAloneCase(contactInput);
         }
         throw new BadRequestException(Constants.INVALID_INPUT);
     }
 
-    /*
-    public Identity addOrUpdateContact(FluxKartContact fluxkartcontact) {
-        if(!(fluxkartcontact.getEmail() != null && fluxkartcontact.getPhoneNumber() != null)){
-            //only email or phone number is present
-            if(fluxkartcontact.getEmail() != null){
-                return helper.handleEmailOnly(fluxkartcontact);
-            }
-            return helper.handlePhoneNumberOnly(fluxkartcontact);
-        }
-        return helper.handleEmailAndPhoneNumber(fluxkartcontact);
+    public FluxKartContact deleteContact(Long id) {
+        return helper.deleteContact(id);
     }
 
-     */
-
+    public Identity getIdentity(Long id) {
+        return helper.getIdentityForContactID(id);
+    }
 }
