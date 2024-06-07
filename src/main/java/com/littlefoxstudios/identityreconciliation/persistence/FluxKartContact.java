@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Data
 @Entity

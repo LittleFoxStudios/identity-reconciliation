@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>identityreconciliation</name>
 	<description>Bitespeed Backend Task : Identity Reconciliation</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -57,5 +58,17 @@
 			<version>6.0.13.Final</version>
 		</dependency>
 	</dependencies>
-
+	<build>
+		<plugins>
+			<!-- Add Spring Boot Maven Plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!-- Set the main class for your application -->
+					<mainClass>com.littlefoxstudios.identityreconciliation.IdentityreconciliationApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
