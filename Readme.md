@@ -49,6 +49,8 @@ UNIQUE INDEX `linkedId_UNIQUE` (`linkedId` ASC) VISIBLE
     Deletes all the existing data
     
     `URI` : /api/identity
-    `METHOD' : DELETE
+    `METHOD` : DELETE
 
-5. VIEW API CALL LOGS
+5. VIEW API CALL LOGS (WIP)
+
+TalendAPI Tester import is found here >> https://github.com/LittleFoxStudios/identity-reconciliation/blob/master/Bitespeed%20API%20Tests%20(TalendAPI).json
